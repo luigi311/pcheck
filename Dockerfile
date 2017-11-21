@@ -41,7 +41,10 @@ RUN cd /pcheck && python manage.py collectstatic
 COPY django/compatability/ /pcheck/compatability/
 COPY django/static/ /pcheck/static/
 
-RUN cd /pcheck && python manage.py < compatability/generate.py
+RUN cd /pcheck && python manage.py makemigrations
+RUN cd /pcheck && python manage.py migrate
+
+RUN cd /pcheck && python manage.py generate
 
 RUN cd /pcheck && python manage.py makemigrations
 RUN cd /pcheck && python manage.py migrate
