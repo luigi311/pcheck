@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compatability',
 ]
 
 MIDDLEWARE = [
@@ -79,19 +80,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-# DATABASES = {
-#     'default' : {
-#         'ENGINE' : 'django_mongodb_engine',
-#         'NAME' : 'pcheck_database',
-#         'HOST' : '127.0.0.1',
-#         'PORT' : '27017',
-#         'USER' : 'pcheck',
-#         'PASSWORD' : 'pcheck_password',
-#     }
-# }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

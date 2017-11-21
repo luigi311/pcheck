@@ -32,9 +32,19 @@ RUN django-admin startproject pcheck
 
 
 #Copy over the django configuration file
-COPY django/settings.py /pcheck/pcheck/settings.py
 COPY uwsgi_params /pcheck/uwsgi_params
+
+RUN cd /pcheck && python manage.py startapp compatability
+COPY django/pcheck/settings.py /pcheck/pcheck/settings.py
 RUN cd /pcheck && python manage.py collectstatic
+
+COPY django/compatability/ /pcheck/compatability/
+COPY django/static/ /pcheck/static/
+
+RUN cd /pcheck && python manage.py < compatability/generate.py
+
+RUN cd /pcheck && python manage.py makemigrations
+RUN cd /pcheck && python manage.py migrate
 
 
 # Create the folder to hold the enabled websites
