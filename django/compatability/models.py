@@ -39,3 +39,12 @@ class Memory(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class CpuMotherboard(models.Model):
+    cpu = models.ForeignKey(Cpu)
+    motherboard = models.ForeignKey(Motherboard)
+
+class MemoryMotherboard(models.Model):
+    memory = models.ForeignKey(Memory)
+    motherboard = models.ForeignKey(Motherboard)
