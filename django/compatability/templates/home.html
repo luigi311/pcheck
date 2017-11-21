@@ -5,22 +5,66 @@
 {% block content_row %} 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-            {% for name in motherboard %}
-                <p>{{name}}</p>
-            {% endfor %}
-        </div>
-        <div class="col-md-4">
-            {% for name in cpu %}
-                <p>{{name}}</p>
-            {% endfor %}
-        </div>
-        <div class="col-md-4">
-            {% for name in memory %}
-                <p>{{name}}</p>
-            {% endfor %}
-        </div>
+        <form class="form-inline">
+
+            <div class="componentFilter">
+                <a href="#" data-filter="*" class="current">All Categories</a>
+                <a href="#" data-filter=".1150">1150</a>
+            </div>
+
+
+            <div class="components"> 
+                <div class="col-12 col-sm-4">
+                    {% for motherboard in motherboards %}
+                       <p class="{{ motherboard.socket }}"> {{ motherboard.name }} </p>
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-sm-4">
+                    {% for cpu in cpus %}
+                        <p class="{{ cpu.socket }}">{{ cpu.name }}</p>
+                    {% endfor %}
+                </div>
+                <div class="col-12 col-sm-4">
+                    {% for memory in memory %}
+                        <p class="{{ memory.ram_module }}">{{ memory.name }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
 {% endblock content_row %}
+
+{% block javascript %}
+
+
+    var $container = $('.components');
+    $container.isotope({
+        filter: '*',
+        animationOptions: {
+            duration: 750,
+            easing: 'linear',
+            queue: false
+        }
+    });
+
+    $('.componentFilter a').click(function(){
+        $('.componentFilter .current').removeClass('current');
+        $(this).addClass('current');
+ 
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+            filter: selector,
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false
+            }
+         });
+         return false;
+    }); 
+
+
+
+{% endblock javascript %}

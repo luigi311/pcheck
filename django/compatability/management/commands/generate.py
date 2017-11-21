@@ -40,7 +40,8 @@ class Command(BaseCommand):
 
         for i in data:
             d = i.values()
-            m = Memory(ratings=d[0], name=d[1], cas=d[2], speed=d[3], price=d[4], modules=d[5], price_gb=d[6], ram_type=d[7], size=d[8])
+            module = d[3].split("-")
+            m = Memory(ratings=d[0], name=d[1], cas=d[2], speed=d[3], ram_module=module[0], price=d[4], modules=d[5], price_gb=d[6], ram_type=d[7], size=d[8])
             m.save()
     
         f.close()
