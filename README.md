@@ -1,1 +1,2 @@
-# pcheck
+# pccompatibility
+PC compatibility website
