@@ -1,10 +1,17 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import User
 
 from compatability.models import Motherboard, Cpu, Memory
 import random, json
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        print("Creating Superuser")
+        user=User.objects.create_user('admin', password='password')
+        user.is_superuser=True
+        user.is_staff=True
+        user.save()
+
         print("Generating Motherboard Data")
         f = open('static/motherboard.json','r')
         data = json.loads(f.read())

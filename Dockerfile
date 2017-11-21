@@ -32,10 +32,10 @@ RUN django-admin startproject pcheck
 
 
 #Copy over the django configuration file
-COPY uwsgi_params /pcheck/uwsgi_params
+COPY django/uwsgi_params /pcheck/uwsgi_params
 
 RUN cd /pcheck && python manage.py startapp compatability
-COPY django/pcheck/settings.py /pcheck/pcheck/settings.py
+COPY django/pcheck/ /pcheck/pcheck/
 RUN cd /pcheck && python manage.py collectstatic
 
 COPY django/compatability/ /pcheck/compatability/
@@ -55,10 +55,10 @@ RUN mkdir -p /etc/nginx/sites-enabled
 
 # Copy files over from the computer onto the docker image
 # Copy the nginx configuration file and replace the default one
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
 # Copy the configuration for the website
-COPY default /etc/nginx/sites-enabled/default
+COPY nginx/default /etc/nginx/sites-enabled/default
 
 # Copy over the run.sh script that will start the services and keep docker running
 COPY services.sh /services.sh
