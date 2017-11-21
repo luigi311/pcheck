@@ -1,10 +1,26 @@
-<!-- home.html -->
 {% extends "base.html" %}
 
 {% block header_row %} {% endblock header_row %}
 
 {% block content_row %} 
-<div class="col-md-12">
-    
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            {% for name in motherboard %}
+                <p>{{name}}</p>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            {% for name in cpu %}
+                <p>{{name}}</p>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            {% for name in memory %}
+                <p>{{name}}</p>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
 {% endblock content_row %}
