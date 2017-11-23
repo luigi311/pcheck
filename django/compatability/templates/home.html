@@ -5,32 +5,45 @@
 {% block content_row %} 
 <div class="container">
     <div class="row">
-        <form class="form-inline">
+        <aside class="sidebar clearfix">
+            <nav class="primary clearfix"> 
+                <ul> 
+                    
+                    <li><a href="#" class="selected" data-filter="*">All</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Intel</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#" data-filter=".LGA1151">LGA1151</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#" data-filter=".LGA1150">LGA1150</a>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </li> 
+                    <li><a href="#" data-filter=".LGA1151">LGA1151</a></li> 
+                    <li><a href="#" data-filter=".LGA1150">LGA1150</a></li>  
+                </ul> 
+            </nav> 
+        </aside> 
 
-            <div class="componentFilter">
-                <a href="#" data-filter="*" class="current">All Categories</a>
-                <a href="#" data-filter=".1150">1150</a>
-            </div>
-
-
-            <div class="components"> 
-                <div class="col-12 col-sm-4">
+        <section class="main clearfix"> 
+            <div class="socket"> 
+                <div class="entry"> 
                     {% for motherboard in motherboards %}
-                       <p class="{{ motherboard.socket }}"> {{ motherboard.name }} </p>
+                        <p class="{{ motherboard.socket }}"> {{ motherboard.name }} </p>
                     {% endfor %}
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="entry">
                     {% for cpu in cpus %}
                         <p class="{{ cpu.socket }}">{{ cpu.name }}</p>
                     {% endfor %}
                 </div>
-                <div class="col-12 col-sm-4">
+                <div class="entry">
                     {% for memory in memory %}
                         <p class="{{ memory.ram_module }}">{{ memory.name }}</p>
                     {% endfor %}
                 </div>
             </div>
-        </form>
+        </section>
     </div>
 </div>
 
@@ -38,33 +51,46 @@
 
 {% block javascript %}
 
-
-    var $container = $('.components');
-    $container.isotope({
-        filter: '*',
-        animationOptions: {
-            duration: 750,
-            easing: 'linear',
-            queue: false
-        }
-    });
-
-    $('.componentFilter a').click(function(){
-        $('.componentFilter .current').removeClass('current');
-        $(this).addClass('current');
+<script>
  
-        var selector = $(this).attr('data-filter');
-        $container.isotope({
-            filter: selector,
-            animationOptions: {
-                duration: 750,
-                easing: 'linear',
-                queue: false
-            }
-         });
-         return false;
+    var $container = $('.socket'); 
+    $container.isotope({ 
+        filter: '*', 
+        animationOptions: { 
+            duration: 750, 
+            easing: 'linear', 
+            queue: false, 
+        } 
+    }); 
+  
+    $('nav.primary ul a').click(function(){ 
+        var selector = $(this).attr('data-filter'); 
+        $container.isotope({ 
+            filter: selector, 
+            animationOptions: { 
+                duration: 750, 
+                easing: 'linear', 
+                queue: false, 
+            } 
+        }); 
+      return false; 
     }); 
 
+    var $optionSets = $('nav.primary ul'), 
+    $optionLinks = $optionSets.find('a'); 
+   
+    $optionLinks.click(function(){ 
+        var $this = $(this); 
+        // don't proceed if already selected 
+        if ( $this.hasClass('selected') ) { 
+           return false; 
+        } 
+        var $optionSet = $this.parents('nav.primary ul'); 
+        $optionSet.find('.selected').removeClass('selected'); 
+        $this.addClass('selected');  
+    });
+
+</script>
 
 
 {% endblock javascript %}

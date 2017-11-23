@@ -3,37 +3,70 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title" charset="utf-8">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title" charset="utf-8">
+    </head>    
     
-    </head>
     
-    <body>
-        <!-- Fixed navbar -->
-        <nav class="navbar navbar-toggleable-md navbar-light bg-faded main">
-            <a class="navbar-brand lead" href="{% url 'home' %}">PC Compatability</a>
-            <a class="nav-link" href="/about">About Us<span class="sr-only">(current)</span></a>
+    <header class="header clearfix">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'home' %}">Pc Compatabity</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-outline-default my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-            </form>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About us</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                            Search
+                        </button>
+                    </input>
+                </form>
             </div>
         </nav>
+    </header>
+    
+    <aside class="sidebar clearfix">
+        <nav class="primary clearfix"> 
+            <ul> 
+                <li><a href="#" class="selected" data-filter="*">All</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Intel</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" data-filter=".LGA1151">LGA1151</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#" data-filter=".LGA1150">LGA1150</a>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </li> 
+                <li><a href="#" data-filter=".LGA1151">LGA1151</a></li> 
+                <li><a href="#" data-filter=".LGA1150">LGA1150</a></li>  
+            </ul> 
+        </nav> 
+    </aside> 
+    
+    <body> 
 
         <div class="container-fluid">
+        <div class="row">{% block header_row %} {% endblock header_row %}</div>
+        <div class="row">{% block content_row %} {% endblock content_row %}</div>
 
-            <div class="row">{% block header_row %} {% endblock header_row %}</div>
-            <div class="row">{% block content_row %} {% endblock content_row %}</div>
-
-        </div>
-        
+       
         <!-- jQuery first, then Tether, then Bootstrap JS. -->
         <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
@@ -43,8 +76,9 @@
         <!-- Isotop js file --> 
         <script src="{% static 'js/isotope.pkgd.js' %}"></script>
 
-        {% block javascript %} {% endblock javascript %}
 
+        {% block javascript %} 
+        {% endblock javascript %}
     </body>
 </html>
 

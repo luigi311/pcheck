@@ -23,6 +23,7 @@ class Motherboard(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Cpu(models.Model):
     ratings = models.CharField(max_length=512)
     price = models.CharField(max_length=512)
@@ -31,6 +32,7 @@ class Cpu(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class Memory(models.Model):
     ratings = models.CharField(max_length=512)
@@ -44,7 +46,6 @@ class Memory(models.Model):
     ram_type = models.CharField(max_length=512)
     size = models.CharField(max_length=512)
 
-
     def __unicode__(self):
         return self.name
 
@@ -53,6 +54,8 @@ class CpuMotherboard(models.Model):
     cpu = models.ForeignKey(Cpu)
     motherboard = models.ForeignKey(Motherboard, related_name="cpus")
 
+
 class MemoryMotherboard(models.Model):
     memory = models.ForeignKey(Memory)
     motherboard = models.ForeignKey(Motherboard,related_name="memories")
+    
