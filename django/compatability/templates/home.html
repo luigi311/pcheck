@@ -2,93 +2,62 @@
 
 {% block header_row %} {% endblock header_row %}
 
-{% block content_row %} 
-<div class="container">
-    <div class="row">
-        <aside class="sidebar clearfix">
-            <nav class="primary clearfix"> 
-                <ul> 
-                    
-                    <li><a href="#" class="selected" data-filter="*">All</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Intel</a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" data-filter=".LGA1151">LGA1151</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-filter=".LGA1150">LGA1150</a>
-                            <div class="dropdown-divider"></div>
-                        </div>
-                    </li> 
-                    <li><a href="#" data-filter=".LGA1151">LGA1151</a></li> 
-                    <li><a href="#" data-filter=".LGA1150">LGA1150</a></li>  
-                </ul> 
-            </nav> 
-        </aside> 
+{% block content_row %}
+    <aside class="sidebar clearfix">
+        <nav class="primary clearfix"> 
+            <ul> 
+                <li><a href="#" data-filter='*' onclick="mothercpufilter(this)">Show All </a></li>
+                {% for motherboard in motherboards %}
+                    <li><a href="#" data-filter=".{{motherboard.socket}}" onclick="mothercpufilter(this)">{{motherboard.socket}}</a></li>
+                {% endfor %}
 
-        <section class="main clearfix"> 
-            <div class="socket"> 
-                <div class="entry"> 
-                    {% for motherboard in motherboards %}
-                        <p class="{{ motherboard.socket }}"> {{ motherboard.name }} </p>
-                    {% endfor %}
-                </div>
-                <div class="entry">
-                    {% for cpu in cpus %}
-                        <p class="{{ cpu.socket }}">{{ cpu.name }}</p>
-                    {% endfor %}
-                </div>
-                <div class="entry">
-                    {% for memory in memory %}
-                        <p class="{{ memory.ram_module }}">{{ memory.name }}</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
+            </ul> 
+        </nav> 
+    </aside> 
+
+    <div class="container"> 
+        <div class="row">
+            <section class="main clearfix"> 
+                    <div class="col-3 entry filtering">
+                        <ul>
+                           {% for motherboard in motherboards %}
+                                <li><p data-filter=".{{motherboard.socket}}" onclick="mothercpufilter(this)" class="mothercpu {{ motherboard.socket }}">{{ motherboard.name }}</p></li>
+                           {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-3 entry filtering">
+                        <ul>
+                            {% for cpu in cpus %}
+                                <li><p data-filter=".{{cpu.socket}}" onclick="mothercpufilter(this)" class="mothercpu {{ cpu.socket }}">{{ cpu.name }}</p></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="col-3 entry filtering">
+                        <ul>
+                            {% for memory in memory %}
+                                <li><p class="memory {{ memory.ram_module }}">{{ memory.name }}</p></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+            </section>
+        </div>
     </div>
-</div>
 
 {% endblock content_row %}
 
 {% block javascript %}
 
 <script>
- 
-    var $container = $('.socket'); 
-    $container.isotope({ 
-        filter: '*', 
-        animationOptions: { 
-            duration: 750, 
-            easing: 'linear', 
-            queue: false, 
-        } 
-    }); 
-  
-    $('nav.primary ul a').click(function(){ 
-        var selector = $(this).attr('data-filter'); 
-        $container.isotope({ 
-            filter: selector, 
-            animationOptions: { 
-                duration: 750, 
-                easing: 'linear', 
-                queue: false, 
-            } 
-        }); 
-      return false; 
-    }); 
 
-    var $optionSets = $('nav.primary ul'), 
-    $optionLinks = $optionSets.find('a'); 
-   
-    $optionLinks.click(function(){ 
-        var $this = $(this); 
-        // don't proceed if already selected 
-        if ( $this.hasClass('selected') ) { 
-           return false; 
-        } 
-        var $optionSet = $this.parents('nav.primary ul'); 
-        $optionSet.find('.selected').removeClass('selected'); 
-        $this.addClass('selected');  
-    });
+
+    // var $mothercpu = $('.filtering').isotope({
+    //     itemSelector: '.mothercpu'
+    // });
+
+    function mothercpufilter(identifier) {
+        console.log($(identifier).data("filter"))
+        $mothercpu.isotope({ filter: $(identifier).data("filter") });
+    };
 
 </script>
 

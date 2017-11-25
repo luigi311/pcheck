@@ -9,6 +9,7 @@ FROM nginx
 
 # Pass through specific port from docker image onto the actual computer for Https/SSL 
 EXPOSE 443
+EXPOSE 80
 # Map exposed port to a different port on the machine from command line with
 # "docker run -p <different port>:443 <image name>"
 
@@ -44,7 +45,7 @@ COPY django/static/ /pcheck/static/
 RUN cd /pcheck && python manage.py makemigrations
 RUN cd /pcheck && python manage.py migrate
 
-RUN cd /pcheck && python manage.py generate
+RUN cd /pcheck && python manage.py generate --all
 
 RUN cd /pcheck && python manage.py makemigrations
 RUN cd /pcheck && python manage.py migrate

@@ -3,6 +3,13 @@ upstream django {
     server 0.0.0.0:8001; # for a web port socket (we'll use this first)
 }
 
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name localhost;
+    return 301 https://$server_name$request_uri;
+}
+
 # configuration of the server
 server {
     server_tokens off;

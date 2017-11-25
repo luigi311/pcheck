@@ -14,12 +14,6 @@ class Motherboard(models.Model):
     max_ram = models.CharField(max_length=512)
     form_factor = models.CharField(max_length=512)
 
-    # def get_cpu(self):
-    #     return self.cpus.all()
-
-    # def get_memory(self):
-    #     return self.memories.all()
-
     def __unicode__(self):
         return self.name
 
@@ -48,6 +42,13 @@ class Memory(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Socket(models.Model):
+    socket=models.CharField(max_length=512)
+
+    def __unicode__(self):
+        return self.socket
 
 
 class CpuMotherboard(models.Model):

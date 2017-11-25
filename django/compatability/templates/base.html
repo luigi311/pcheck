@@ -48,13 +48,13 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Intel</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" data-filter=".LGA1151">LGA1151</a>
+                        <a class="dropdown-item" href="#" data-filter=".LGA1151" onclick="isotopefilter()">LGA1151</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#" data-filter=".LGA1150">LGA1150</a>
                         <div class="dropdown-divider"></div>
                     </div>
                 </li> 
-                <li><a href="#" data-filter=".LGA1151">LGA1151</a></li> 
+                <li><a href="#" data-filter=".LGA1151" onclick="mothercpufilter(this)">LGA1151</a></li> 
                 <li><a href="#" data-filter=".LGA1150">LGA1150</a></li>  
             </ul> 
         </nav> 
@@ -63,8 +63,8 @@
     <body> 
 
         <div class="container-fluid">
-        <div class="row">{% block header_row %} {% endblock header_row %}</div>
-        <div class="row">{% block content_row %} {% endblock content_row %}</div>
+        <div>{% block header_row %} {% endblock header_row %}</div>
+        <div>{% block content_row %} {% endblock content_row %}</div>
 
        
         <!-- jQuery first, then Tether, then Bootstrap JS. -->
