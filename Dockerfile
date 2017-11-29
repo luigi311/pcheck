@@ -37,10 +37,16 @@ RUN django-admin startproject pcheck
 COPY django/uwsgi_params /pcheck/uwsgi_params
 
 RUN cd /pcheck && python manage.py startapp compatability
+
+# Copy Settings and Urls
 COPY django/pcheck/ /pcheck/pcheck/
+
 RUN cd /pcheck && python manage.py collectstatic
+
+# Copy over function, models, views, templates, css, js
 COPY django/compatability/ /pcheck/compatability/
 COPY django/static/ /pcheck/static/
+
 RUN cd /pcheck && python manage.py makemigrations
 RUN cd /pcheck && python manage.py migrate
 
@@ -48,7 +54,6 @@ RUN cd /pcheck && python manage.py migrate
 # Copy files over from the computer onto the docker image
 # Copy the nginx configuration file and replace the default one
 COPY nginx/ /etc/nginx/
-
 
 # Copy over the run.sh script that will start the services and keep docker running
 COPY services.sh /services.sh
