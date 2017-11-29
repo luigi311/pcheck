@@ -1,65 +1,74 @@
 {% extends "base.html" %}
-
 {% block header_row %} {% endblock header_row %}
-
 {% block content_row %}
-    <aside class="sidebar clearfix">
-        <nav class="primary clearfix"> 
-            <ul> 
-                <li><a href="#" data-filter='*' onclick="mothercpufilter(this)">Show All </a></li>
-                {% for motherboard in motherboards %}
-                    <li><a href="#" data-filter=".{{motherboard.socket}}" onclick="mothercpufilter(this)">{{motherboard.socket}}</a></li>
+    <aside class="sidebar clearfix" style="overflow-y: auto">
+        <nav class="primary clearfix">
+            <ul>
+                <li><a href="#" onclick="filter('*')">Show All </a></li>
+                {% for socket in sockets %}
+                    <li><a href="#" onclick="filter('{{socket}}')">{{socket}}</a></li>
                 {% endfor %}
+            </ul>
+        </nav>
+    </aside>
 
-            </ul> 
-        </nav> 
-    </aside> 
-
-    <div class="container"> 
+    <div class="container">
         <div class="row">
-            <section class="main clearfix"> 
+            <section class="main clearfix">
                     <div class="col-3 entry filtering">
-                        <ul>
+                        <ul id='id_motherboard'>
                            {% for motherboard in motherboards %}
-                                <li><p data-filter=".{{motherboard.socket}}" onclick="mothercpufilter(this)" class="mothercpu {{ motherboard.socket }}">{{ motherboard.name }}</p></li>
+                                <li><p>{{ motherboard.name }}</p></li>
                            {% endfor %}
                         </ul>
                     </div>
                     <div class="col-3 entry filtering">
-                        <ul>
+                        <ul id='id_cpu'>
                             {% for cpu in cpus %}
-                                <li><p data-filter=".{{cpu.socket}}" onclick="mothercpufilter(this)" class="mothercpu {{ cpu.socket }}">{{ cpu.name }}</p></li>
+                                <li><p>{{ cpu.name }}</p></li>
                             {% endfor %}
                         </ul>
                     </div>
                     <div class="col-3 entry filtering">
-                        <ul>
+                        <ul id='id_memory'>
                             {% for memory in memory %}
-                                <li><p class="memory {{ memory.ram_module }}">{{ memory.name }}</p></li>
+                                <li><p>{{ memory.name }}</p></li>
                             {% endfor %}
                         </ul>
                     </div>
             </section>
         </div>
     </div>
-
 {% endblock content_row %}
-
 {% block javascript %}
+<script type="text/javascript">
+    function filter(socket) {
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'filter' %}",
+            data: {
+                'csrfmiddlewaretoken':'{{ csrf_token }}',
+                'socket': socket,
+            }
+        }).done(function(response) {
+            $("#id_motherboard").html("");
+            $("#id_cpu").html("");
+            var breaking = 0
 
-<script>
+            for (i = 0; i < response.length; i++) {
+                if (response[i] == ";") {
+                    breaking = 1;
+                } else {
+                    li = '<li><p>'+response[i]+'</p></li>';
 
-
-    // var $mothercpu = $('.filtering').isotope({
-    //     itemSelector: '.mothercpu'
-    // });
-
-    function mothercpufilter(identifier) {
-        console.log($(identifier).data("filter"))
-        $mothercpu.isotope({ filter: $(identifier).data("filter") });
-    };
-
+                    if (breaking == 0){
+                        $("#id_motherboard").append(li);
+                    } else {
+                        $("#id_cpu").append(li);
+                    }
+                }
+            }
+        });
+    }
 </script>
-
-
 {% endblock javascript %}

@@ -11,9 +11,9 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title" charset="utf-8">
-    </head>    
-    
-    
+    </head>
+
+
     <header class="header clearfix">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{% url 'home' %}">Pc Compatabity</a>
@@ -26,59 +26,26 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'about' %}">About us</a>
-                    </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                            Search
-                        </button>
-                    </input>
-                </form>
             </div>
         </nav>
     </header>
-    
-    <aside class="sidebar clearfix">
-        <nav class="primary clearfix"> 
-            <ul> 
-                <li><a href="#" class="selected" data-filter="*">All</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Intel</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" data-filter=".LGA1151" onclick="isotopefilter()">LGA1151</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-filter=".LGA1150">LGA1150</a>
-                        <div class="dropdown-divider"></div>
-                    </div>
-                </li> 
-                <li><a href="#" data-filter=".LGA1151" onclick="mothercpufilter(this)">LGA1151</a></li> 
-                <li><a href="#" data-filter=".LGA1150">LGA1150</a></li>  
-            </ul> 
-        </nav> 
-    </aside> 
-    
-    <body> 
+
+    <body>
 
         <div class="container-fluid">
         <div>{% block header_row %} {% endblock header_row %}</div>
         <div>{% block content_row %} {% endblock content_row %}</div>
 
-       
+
         <!-- jQuery first, then Tether, then Bootstrap JS. -->
-        <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
         <script src="https://use.fontawesome.com/31ce935913.js"></script>
 
-        <!-- Isotop js file --> 
-        <script src="{% static 'js/isotope.pkgd.js' %}"></script>
 
-
-        {% block javascript %} 
+        {% block javascript %}
         {% endblock javascript %}
     </body>
 </html>
-

@@ -15,11 +15,16 @@ def superuser():
 def sockets():
     print("Creating Sockets")
     f = open('static/motherboard.json','r')
+    c = open('static/cpu.json','r')
     data = json.loads(f.read())
+    data2 = json.loads(c.read())
     sockets = []
     for i in data:
         d = i.values()
         sockets.append(d[1])
+    for i in data2:
+        d = i.values()
+        sockets.append(d[3])
 
     sockets = list(set(sockets))
     for i in sockets:
@@ -34,7 +39,7 @@ def motherboards():
 
     for i in data:
         d = i.values()
-        m = Motherboard(ratings=d[0], socket=d[1], ram_slots=d[2], price=d[3], name=d[4], max_ram=d[5], form_factor=d[6])
+        m = Motherboard(ratings=d[0], socket=Socket.objects.get(socket=d[1]), ram_slots=d[2], price=d[3], name=d[4], max_ram=d[5], form_factor=d[6])
         m.save()
 
     f.close()
@@ -46,7 +51,7 @@ def cpus():
 
     for i in data:
         d = i.values()
-        c = Cpu(ratings=d[0], price=d[1], name=d[2], socket=d[3])
+        c = Cpu(ratings=d[0], price=d[1], name=d[2], socket=Socket.objects.get(socket=d[3]))
         c.save()
     
     f.close()

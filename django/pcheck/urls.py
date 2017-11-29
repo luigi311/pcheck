@@ -18,11 +18,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-from compatability.views import HomeView,AboutView
+from compatability.views import HomeView, AboutView, SearchView
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^about/', AboutView.as_view(), name='about')
+    url(r'^filter/$', SearchView.as_view(), name='filter')
 ]

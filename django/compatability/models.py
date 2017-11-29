@@ -5,9 +5,15 @@ from django.db import models
 
 # Create your models here.
 
+class Socket(models.Model):
+    socket=models.CharField(max_length=512)
+
+    def __unicode__(self):
+        return self.socket
+
 class Motherboard(models.Model):
     ratings = models.CharField(max_length=512)
-    socket = models.CharField(max_length=512)
+    socket = models.ForeignKey(Socket, related_name='motherboard')
     ram_slots = models.CharField(max_length=512)
     price = models.CharField(max_length=512)
     name = models.CharField(max_length=512)
@@ -22,7 +28,7 @@ class Cpu(models.Model):
     ratings = models.CharField(max_length=512)
     price = models.CharField(max_length=512)
     name = models.CharField(max_length=512)
-    socket = models.CharField(max_length=512)
+    socket = models.ForeignKey(Socket,related_name='cpu')
 
     def __unicode__(self):
         return self.name
@@ -42,18 +48,6 @@ class Memory(models.Model):
 
     def __unicode__(self):
         return self.name
-
-
-class Socket(models.Model):
-    socket=models.CharField(max_length=512)
-
-    def __unicode__(self):
-        return self.socket
-
-
-class CpuMotherboard(models.Model):
-    cpu = models.ForeignKey(Cpu)
-    motherboard = models.ForeignKey(Motherboard, related_name="cpus")
 
 
 class MemoryMotherboard(models.Model):

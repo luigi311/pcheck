@@ -1,13 +1,13 @@
 # Build the docker image with
 # "docker build -t <name for image> ."
-# Access shell 
+# Access shell
 # "docker run -it <name for image> bash"
 
 # Image source for the docker image. ubuntu/fedora/nginx/apache
 FROM nginx
 
 
-# Pass through specific port from docker image onto the actual computer for Https/SSL 
+# Pass through specific port from docker image onto the actual computer for Https/SSL
 EXPOSE 443
 EXPOSE 80
 # Map exposed port to a different port on the machine from command line with
@@ -16,10 +16,11 @@ EXPOSE 80
 
 # Run commands when building the docker image
 # Install openssl package in order to create ssl certificates, gnupg to import repository keys, python-pip for installing django
-RUN apt-get update 
+RUN apt-get update
 RUN apt-get install -y \
     openssl \
-    python-pip  
+    python-pip \
+    git
 RUN pip install django
 RUN pip install uwsgi
 
@@ -32,7 +33,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 RUN django-admin startproject pcheck
 
 
-#Copy over the django configuration file
+# Copy over the django configuration file
 COPY django/uwsgi_params /pcheck/uwsgi_params
 
 RUN cd /pcheck && python manage.py startapp compatability
@@ -42,13 +43,13 @@ RUN cd /pcheck && python manage.py collectstatic
 COPY django/compatability/ /pcheck/compatability/
 COPY django/static/ /pcheck/static/
 
+# Generate data
 RUN cd /pcheck && python manage.py makemigrations
 RUN cd /pcheck && python manage.py migrate
 
-RUN cd /pcheck && python manage.py generate --all
-
-RUN cd /pcheck && python manage.py makemigrations
-RUN cd /pcheck && python manage.py migrate
+#RUN cd /pcheck && python manage.py generate --all
+#RUN cd /pcheck && python manage.py makemigrations
+#RUN cd /pcheck && python manage.py migrate
 
 
 # Create the folder to hold the enabled websites
