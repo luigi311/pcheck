@@ -38,7 +38,7 @@ class Memory(models.Model):
     ratings = models.CharField(max_length=512)
     name = models.CharField(max_length=512)
     cas = models.CharField(max_length=512)
-    speed = models.CharField(max_length=512) 
+    speed = models.CharField(max_length=512)
     ram_module = models.CharField(max_length=512)
     price = models.CharField(max_length=512)
     modules = models.CharField(max_length=512)
@@ -48,9 +48,3 @@ class Memory(models.Model):
 
     def __unicode__(self):
         return self.name
-
-
-class MemoryMotherboard(models.Model):
-    memory = models.ForeignKey(Memory)
-    motherboard = models.ForeignKey(Motherboard,related_name="memories")
-    
